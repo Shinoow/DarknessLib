@@ -1,7 +1,7 @@
 # DarknessLib
 Library mod for handling light calculations and similar things
 
-## Main information
+### Main information
 DarknessLib is a library used for dealing with light calculations, through common code previously used in Grue and Hungering Darkness.
 This library mod intends on simplifying the process of maintaining those mods by taking out the identical parts and putting them in a separate library for them to use.
 This mod also aims to expose those parts for other mods to make use of.

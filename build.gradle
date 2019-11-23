@@ -35,7 +35,7 @@ minecraft {
     mappings = "stable_nodoc_39"
     makeObfSourceJar = false
 
-    replace "@FORGEVERSION@", forge_version
+    replace "FORGEVERSION", forge_version
 	replace "@DLIB_VERSION@", dlib_version
 	replace "@CERT_FINGERPRINT@", project.findProperty('signSHA1')
 }

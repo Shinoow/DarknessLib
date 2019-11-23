@@ -42,7 +42,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 
-@Mod(modid = DarknessLib.MODID, name = DarknessLib.NAME, version = DarknessLib.VERSION, dependencies = "required-after:forge@[@FORGEVERSION@,)", acceptedMinecraftVersions = "[1.12.2]", guiFactory = "com.shinoow.darknesslib.client.config.DarknessLibGuiFactory", updateJSON = "https://raw.githubusercontent.com/Shinoow/DarknessLib/master/version.json", useMetadata = false, certificateFingerprint = "@CERT_FINGERPRINT@")
+@Mod(modid = DarknessLib.MODID, name = DarknessLib.NAME, version = DarknessLib.VERSION, dependencies = "required-after:forge@[FORGEVERSION,)", acceptedMinecraftVersions = "[1.12.2]", guiFactory = "com.shinoow.darknesslib.client.config.DarknessLibGuiFactory", updateJSON = "https://raw.githubusercontent.com/Shinoow/DarknessLib/master/version.json", useMetadata = false, certificateFingerprint = "@CERT_FINGERPRINT@")
 public class DarknessLib {
 
 	public static final String VERSION = "@DLIB_VERSION@";

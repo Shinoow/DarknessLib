@@ -101,6 +101,7 @@ curseforge {
 		changelogType = 'html'
 		changelog = new File('changelog.html') //must have at least an empty string
 		addArtifact srcJar
+        addArtifact apiJar
         relations {
 			optionalDependency 'dynamic-lights'
             optionalDependency 'smooth-entity-light'

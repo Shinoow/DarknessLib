@@ -26,14 +26,14 @@ import net.minecraftforge.fml.relauncher.Side;
 public class DarknessLibClientEventHandler {
 
 	@SubscribeEvent
-	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
+	public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if (event.getEntity() instanceof EntityPlayer){
 			if(!DarknessLib.DYNAMIC_LIGHTS_MODE) return;
 			PacketDispatcher.sendToServer(new DynamicLightsMessage(Loader.isModLoaded("dynamiclights") || Loader.isModLoaded("sel") || isOFDynLightsEnabled()));
 		}
 	}
 
-	private boolean isOFDynLightsEnabled() {
+	private static boolean isOFDynLightsEnabled() {
 		try {
 			Class<?> optifineConfig = Class.forName("Config", false, Loader.instance().getModClassLoader());
 			Object test = optifineConfig.getMethod("isDynamicLights").invoke(null);

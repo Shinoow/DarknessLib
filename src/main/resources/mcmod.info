@@ -1,0 +1,17 @@
+[
+{
+  "modid": "darknesslib",
+  "name": "DarknessLib",
+  "description": "Library mod for handling light calculations and similar things",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://www.curseforge.com/minecraft/mc-mods/darknesslib",
+  "updateUrl": "https://www.curseforge.com/minecraft/mc-mods/darknesslib",
+  "authorList": ["shinoow"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": [],
+ 	"useDependencyInformation": true
+}
+]

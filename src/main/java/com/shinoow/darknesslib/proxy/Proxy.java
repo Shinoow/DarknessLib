@@ -55,7 +55,7 @@ public class Proxy {
 				if(Entity.class.isAssignableFrom(clazz))
 					DarknessLibAPI.getInstance().addVehicle(clazz);
 			} catch(Exception e) {
-				DarknessLib.LOGGER.log(Level.ERROR, "");
+				DarknessLib.LOGGER.log(Level.ERROR, "Unable to load Class {}: {}", "com.mrcrayfish.vehicle.entity.EntityVehicle", e.getStackTrace());
 			}
 	}
 
@@ -65,7 +65,6 @@ public class Proxy {
 				int light_level = b.getDefaultState().getLightValue(null, null);
 				if(light_level > 0) {
 					DarknessLibAPI.getInstance().addLightsource(new ItemStack(b), light_level);
-					DarknessLib.LOGGER.log(Level.INFO, "{} has been added to the Dynamic Lights List!", b.getRegistryName());
 				}
 			} catch(Exception e) {
 

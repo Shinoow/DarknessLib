@@ -13,6 +13,10 @@ package com.shinoow.darknesslib.api;
 
 import java.util.*;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.shinoow.darknesslib.api.cap.DynamicLightsCapabilityProvider;
 import com.shinoow.darknesslib.api.cap.IDynamicLightsCapability;
 import com.shinoow.darknesslib.api.internal.DummyMethodHandler;
@@ -48,6 +52,8 @@ public class DarknessLibAPI {
 
 	private IInternalMethodHandler internalMethodHandler = new DummyMethodHandler();
 
+	private Logger LOGGER = LogManager.getLogger("DarknessLibAPI");
+	
 	private DarknessLibAPI() {}
 
 	public static DarknessLibAPI getInstance() {
@@ -60,8 +66,10 @@ public class DarknessLibAPI {
 	 * @param lightLevel Light level
 	 */
 	public void addLightsource(ItemStack stack, int lightLevel) {
-		if(!stack.isEmpty() && lightLevel > 0 && lightLevel < 16)
+		if(!stack.isEmpty() && lightLevel > 0 && lightLevel < 16) {
 			DYNAMIC_LIGHTS_MAP.put(stack, lightLevel);
+			LOGGER.log(Level.INFO, "{} has been added to the Dynamic Lights List with Light level {}!", stack.getItem().getRegistryName(), lightLevel);
+		} else LOGGER.log(Level.ERROR, "{} is either a invalid item, or {} is a invalid light level", stack.getItem().getRegistryName(), lightLevel);
 	}
 
 	/**

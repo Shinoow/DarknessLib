@@ -104,7 +104,7 @@ public class DarknessLib {
 						if(Entity.class.isAssignableFrom(clazz))
 							DarknessLibAPI.getInstance().addVehicle(clazz);
 					} catch(Exception e) {
-						LOGGER.log(Level.ERROR, "Failed to add vehicle class {} from {}: {}", m.getStringValue(), m.getSender(), e.getStackTrace());
+						LOGGER.log(Level.ERROR, "Failed to add vehicle Class {} from {}: {}", m.getStringValue(), m.getSender(), e.getStackTrace());
 					}
 			} else if(m.key.equals("addLightsource"))
 				if(m.isStringMessage()) {

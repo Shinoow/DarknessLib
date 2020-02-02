@@ -66,10 +66,11 @@ public class DarknessLibAPI {
 	 * @param lightLevel Light level
 	 */
 	public void addLightsource(ItemStack stack, int lightLevel) {
-		if(!stack.isEmpty() && lightLevel > 0 && lightLevel < 16) {
+		if(stack.isEmpty()) return;
+		if(lightLevel > 0 && lightLevel < 16) {
 			DYNAMIC_LIGHTS_MAP.put(stack, lightLevel);
 			LOGGER.log(Level.INFO, "{} has been added to the Dynamic Lights List with Light level {}!", stack.getItem().getRegistryName(), lightLevel);
-		} else LOGGER.log(Level.ERROR, "{} is either a invalid item, or {} is a invalid light level", stack.getItem().getRegistryName(), lightLevel);
+		} else LOGGER.log(Level.ERROR, "{} is an invalid light level", stack.getItem().getRegistryName(), lightLevel);
 	}
 
 	/**

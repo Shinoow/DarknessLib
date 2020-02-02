@@ -29,6 +29,7 @@ import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.IThreadListener;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -44,6 +45,14 @@ public class Proxy {
 		PacketDispatcher.registerPackets();
 
 		DarknessLibAPI.getInstance().setInternalMethodHandler(new InternalMethodHandler());
+		DarknessLibAPI.getInstance().addLightProvider((player) -> {
+			if(DarknessLibAPI.getInstance().hasDynamicLights(player)) {
+				int main_light = DarknessLibAPI.getInstance().getLight(player.getHeldItem(EnumHand.MAIN_HAND));
+				int off_light = DarknessLibAPI.getInstance().getLight(player.getHeldItem(EnumHand.OFF_HAND));
+				return Math.max(main_light, off_light);
+			}
+			return 0;
+		});
 	}
 
 	public void init() {

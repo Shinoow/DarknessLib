@@ -21,6 +21,7 @@ import com.shinoow.darknesslib.api.cap.DynamicLightsCapabilityProvider;
 import com.shinoow.darknesslib.api.cap.IDynamicLightsCapability;
 import com.shinoow.darknesslib.api.internal.DummyMethodHandler;
 import com.shinoow.darknesslib.api.internal.IInternalMethodHandler;
+import com.shinoow.darknesslib.api.light.ILightProvider;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,13 +43,15 @@ public class DarknessLibAPI {
 	/**
 	 * String used to specify the API version in the "package-info.java" classes
 	 */
-	public static final String API_VERSION = "1.0.0";
+	public static final String API_VERSION = "1.1.0";
 
 	private static final DarknessLibAPI INSTANCE = new DarknessLibAPI();
 
 	private final Map<ItemStack, Integer> DYNAMIC_LIGHTS_MAP = new HashMap<>();
 
 	private final List<Class<? extends Entity>> VEHICLES = new ArrayList<>();
+
+	private final List<ILightProvider> LIGHT_PROVIDERS = new ArrayList<>();
 
 	private IInternalMethodHandler internalMethodHandler = new DummyMethodHandler();
 
@@ -82,6 +85,14 @@ public class DarknessLibAPI {
 	}
 
 	/**
+	 * Adds a provider for additional light, allowing the server to take that light into account
+	 * @param provider A Light Provider
+	 */
+	public void addLightProvider(ILightProvider provider) {
+		LIGHT_PROVIDERS.add(provider);
+	}
+
+	/**
 	 * Attempts to calculate the light at the entity's position
 	 * @param entityIn Entity to check the light by
 	 * @param strict Whether or not to account for the entity possibly standing inside a block (ex. soul sand), which would throw off the calculation entirely
@@ -95,23 +106,25 @@ public class DarknessLibAPI {
 	}
 
 	/**
+	 * Attempts to calculate the light at the player's position, including any additional light if present
+	 * @param player Player to check
+	 * @param strict Whether or not to account for the player possibly standing inside a block (ex. soul sand), which would throw off the calculation entirely
+	 * @return The light level
+	 */
+	public int getLightWithAdditions(EntityPlayer player, boolean strict) {
+		return Math.max(getLight(player, strict), LIGHT_PROVIDERS.stream().mapToInt(l -> l.getAdditionalLight(player)).max().orElse(0));
+	}
+
+	/**
 	 * Attempts to calculate the light at the player's position, including dynamic lights if enabled
 	 * @param player Player to check
 	 * @param strict Whether or not to account for the player possibly standing inside a block (ex. soul sand), which would throw off the calculation entirely
-	 * @return
+	 * @return The light level
+	 * @deprecated use {@link #getLightWithAdditions(EntityPlayer, boolean)} instead
 	 */
+	@Deprecated
 	public int getLightWithDynLights(EntityPlayer player, boolean strict) {
-
-		int light = getLight(player, strict);
-
-		if(hasDynamicLights(player)) {
-			int main_light = getLight(player.getHeldItem(EnumHand.MAIN_HAND));
-			int off_light = getLight(player.getHeldItem(EnumHand.OFF_HAND));
-			int dynamic_light = Math.max(main_light, off_light);
-			light = Math.max(light, dynamic_light);
-		}
-
-		return light;
+		return getLightWithAdditions(player, strict);
 	}
 
 	/**

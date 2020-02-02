@@ -1,6 +1,6 @@
 /*******************************************************************************
  * DarknessLib
- * Copyright (c) 2019 - 2019 Shinoow.
+ * Copyright (c) 2019 - 2020 Shinoow.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Lesser Public License v3
  * which accompanies this distribution, and is available at
@@ -53,7 +53,7 @@ public class DarknessLibAPI {
 	private IInternalMethodHandler internalMethodHandler = new DummyMethodHandler();
 
 	private Logger LOGGER = LogManager.getLogger("DarknessLibAPI");
-	
+
 	private DarknessLibAPI() {}
 
 	public static DarknessLibAPI getInstance() {

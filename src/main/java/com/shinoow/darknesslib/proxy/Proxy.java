@@ -1,6 +1,6 @@
 /*******************************************************************************
  * DarknessLib
- * Copyright (c) 2019 - 2019 Shinoow.
+ * Copyright (c) 2019 - 2020 Shinoow.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Lesser Public License v3
  * which accompanies this distribution, and is available at
@@ -63,9 +63,8 @@ public class Proxy {
 		ForgeRegistries.BLOCKS.forEach(b -> {
 			try {
 				int light_level = b.getDefaultState().getLightValue(null, null);
-				if(light_level > 0) {
+				if(light_level > 0)
 					DarknessLibAPI.getInstance().addLightsource(new ItemStack(b), light_level);
-				}
 			} catch(Exception e) {
 
 			}

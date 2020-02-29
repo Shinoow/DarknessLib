@@ -12,6 +12,7 @@
 package com.shinoow.darknesslib.api;
 
 import java.util.*;
+import java.util.function.Function;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +22,6 @@ import com.shinoow.darknesslib.api.cap.DynamicLightsCapabilityProvider;
 import com.shinoow.darknesslib.api.cap.IDynamicLightsCapability;
 import com.shinoow.darknesslib.api.internal.DummyMethodHandler;
 import com.shinoow.darknesslib.api.internal.IInternalMethodHandler;
-import com.shinoow.darknesslib.api.light.ILightProvider;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -51,7 +51,7 @@ public class DarknessLibAPI {
 
 	private final List<Class<? extends Entity>> VEHICLES = new ArrayList<>();
 
-	private final List<ILightProvider> LIGHT_PROVIDERS = new ArrayList<>();
+	private final List<Function<EntityPlayer, Integer>> LIGHT_PROVIDERS = new ArrayList<>();
 
 	private IInternalMethodHandler internalMethodHandler = new DummyMethodHandler();
 
@@ -86,9 +86,10 @@ public class DarknessLibAPI {
 
 	/**
 	 * Adds a provider for additional light, allowing the server to take that light into account
-	 * @param provider A Light Provider
+	 * @param provider A function that returns a light level based on a condition related to the player
 	 */
-	public void addLightProvider(ILightProvider provider) {
+	public void addLightProvider(Function<EntityPlayer, Integer> provider) {
+		LOGGER.log(Level.INFO, "{} added a Light Provider function!", Loader.instance().activeModContainer().getModId());
 		LIGHT_PROVIDERS.add(provider);
 	}
 
@@ -112,7 +113,7 @@ public class DarknessLibAPI {
 	 * @return The light level
 	 */
 	public int getLightWithAdditions(EntityPlayer player, boolean strict) {
-		return Math.max(getLight(player, strict), LIGHT_PROVIDERS.stream().mapToInt(l -> l.getAdditionalLight(player)).max().orElse(0));
+		return Math.max(getLight(player, strict), LIGHT_PROVIDERS.stream().mapToInt(l -> l.apply(player)).max().orElse(0));
 	}
 
 	/**

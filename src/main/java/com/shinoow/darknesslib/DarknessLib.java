@@ -15,6 +15,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Optional;
+import java.util.function.Function;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -24,6 +26,7 @@ import com.shinoow.darknesslib.api.DarknessLibAPI;
 import com.shinoow.darknesslib.proxy.Proxy;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -106,7 +109,7 @@ public class DarknessLib {
 					} catch(Exception e) {
 						LOGGER.log(Level.ERROR, "Failed to add vehicle Class {} from {}: {}", m.getStringValue(), m.getSender(), e.getStackTrace());
 					}
-			} else if(m.key.equals("addLightsource"))
+			} else if(m.key.equals("addLightsource")) {
 				if(m.isStringMessage()) {
 					String[] data = m.getStringValue().split(";");
 					String[] stuff = data[0].split(":");
@@ -119,6 +122,13 @@ public class DarknessLib {
 
 				} else if(m.isItemStackMessage())
 					DarknessLibAPI.getInstance().addLightsource(m.getItemStackValue(), 15);
+			} else if(m.key.equals("addLighProvider")) {
+				if(m.isFunctionMessage()) {
+					Optional<Function<EntityPlayer, Integer>> func = m.getFunctionValue(EntityPlayer.class, Integer.class);
+					if(func.isPresent())
+						DarknessLibAPI.getInstance().addLightProvider(func.get());
+				}
+			}
 		});
 	}
 
@@ -148,7 +158,7 @@ public class DarknessLib {
 
 		} catch (IOException e) {
 			LOGGER.log(Level.ERROR, "Failed to fetch supporter list, using local version!");
-			names = "Tedyhere";
+			names = "Gentlemangamer2015";
 		}
 
 		return names;

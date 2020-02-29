@@ -6,7 +6,7 @@
       "1.12.2-recommended": "1.1.0"
     },
     "1.12.2": {
-      "1.1.0": "The log no longer logs error messages for empty Item Stacks when adding light sources\n- Downgraded to Forge 14.23.5.2768\n- Expanded the way additional light sources (like Dynamic Lights) are handled, allowing other mods to add their own",
+      "1.1.0": "- The log no longer logs error messages for empty Item Stacks when adding light sources\n- Downgraded to Forge 14.23.5.2768\n- Expanded the way additional light sources (like Dynamic Lights) are handled, allowing other mods to add their own",
       "1.0.0": "- Initial release!"
     }
 }

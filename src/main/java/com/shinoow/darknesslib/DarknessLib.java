@@ -73,7 +73,7 @@ public class DarknessLib {
 	public void preInit(FMLPreInitializationEvent event) {
 
 		METADATA = event.getModMetadata();
-		METADATA.description += "\n\n\u00a76Supporters: "+getSupporterList()+"\u00a7r";
+		getSupporterList();
 		MinecraftForge.EVENT_BUS.register(this);
 
 		CFG = new Configuration(event.getSuggestedConfigurationFile());
@@ -147,20 +147,24 @@ public class DarknessLib {
 			CFG.save();
 	}
 
-	private String getSupporterList(){
-		BufferedReader nameFile;
-		String names = "";
-		try {
-			nameFile = new BufferedReader(new InputStreamReader(new URL("https://raw.githubusercontent.com/Shinoow/AbyssalCraft/master/supporters.txt").openStream()));
+	private void getSupporterList(){
+		new Thread("DarknessLib Fetch Supporters") {
+			public void run() {
+				BufferedReader nameFile;
+				String names = "";
+				try {
+					nameFile = new BufferedReader(new InputStreamReader(new URL("https://raw.githubusercontent.com/Shinoow/AbyssalCraft/master/supporters.txt").openStream()));
 
-			names = nameFile.readLine();
-			nameFile.close();
+					names = nameFile.readLine();
+					nameFile.close();
 
-		} catch (IOException e) {
-			LOGGER.log(Level.ERROR, "Failed to fetch supporter list, using local version!");
-			names = "Gentlemangamer2015";
-		}
-
-		return names;
+				} catch (IOException e) {
+					LOGGER.log(Level.ERROR, "Failed to fetch supporter list, using local version!");
+					names = "Jenni Mort, Simon.R.K";
+				}
+				
+				METADATA.description += String.format("\n\n\u00a76Supporters: %s\u00a7r", names);
+			}
+		}.start();
 	}
 }

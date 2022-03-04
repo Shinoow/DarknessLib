@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         jcenter()
-        maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = "https://maven.minecraftforge.net/" }
         maven {
             // Required for the curseforge task
             name = "gradle"
@@ -139,7 +139,7 @@ task prepareFiles(type: Copy){
         include "src/main/**"
     into "$buildDir/rarTemp"
 
-    String filePath = "${project.findProperty("sourceDirDLib")}/DLib source ${props.dlib_version} (${props.mc_version}).rar"
+    String filePath = "${project.findProperty("sourceDirDLib")}/DLib source ${dlib_version} (${mc_version}).rar"
     String filePath1 = "${buildDir}/rarTemp/*"
 
     new File(projectDir, "generateRAR.bat").text = project.findProperty("rarCommand")+' "'+filePath+'" "'+filePath1+'"';

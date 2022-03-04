@@ -1,6 +1,6 @@
 /*******************************************************************************
  * DarknessLib
- * Copyright (c) 2019 - 2020 Shinoow.
+ * Copyright (c) 2019 - 2022 Shinoow.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Lesser Public License v3
  * which accompanies this distribution, and is available at
@@ -122,13 +122,12 @@ public class DarknessLib {
 
 				} else if(m.isItemStackMessage())
 					DarknessLibAPI.getInstance().addLightsource(m.getItemStackValue(), 15);
-			} else if(m.key.equals("addLighProvider")) {
+			} else if(m.key.equals("addLighProvider"))
 				if(m.isFunctionMessage()) {
 					Optional<Function<EntityPlayer, Integer>> func = m.getFunctionValue(EntityPlayer.class, Integer.class);
 					if(func.isPresent())
 						DarknessLibAPI.getInstance().addLightProvider(func.get());
 				}
-			}
 		});
 	}
 
@@ -149,6 +148,7 @@ public class DarknessLib {
 
 	private void getSupporterList(){
 		new Thread("DarknessLib Fetch Supporters") {
+			@Override
 			public void run() {
 				BufferedReader nameFile;
 				String names = "";
@@ -162,7 +162,7 @@ public class DarknessLib {
 					LOGGER.log(Level.ERROR, "Failed to fetch supporter list, using local version!");
 					names = "Jenni Mort, Simon.R.K";
 				}
-				
+
 				METADATA.description += String.format("\n\n\u00a76Supporters: %s\u00a7r", names);
 			}
 		}.start();

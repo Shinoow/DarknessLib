@@ -1,6 +1,6 @@
 /*******************************************************************************
  * DarknessLib
- * Copyright (c) 2019 - 2020 Shinoow.
+ * Copyright (c) 2019 - 2022 Shinoow.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Lesser Public License v3
  * which accompanies this distribution, and is available at
@@ -25,6 +25,8 @@ import net.minecraftforge.fml.relauncher.Side;
 @EventBusSubscriber(value = Side.CLIENT, modid = "darknesslib")
 public class DarknessLibClientEventHandler {
 
+	private static boolean missingOF;
+
 	@SubscribeEvent
 	public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if (event.getEntity() instanceof EntityPlayer){
@@ -34,12 +36,14 @@ public class DarknessLibClientEventHandler {
 	}
 
 	private static boolean isOFDynLightsEnabled() {
+		if(missingOF) return false;
 		try {
 			Class<?> optifineConfig = Class.forName("Config", false, Loader.instance().getModClassLoader());
 			Object test = optifineConfig.getMethod("isDynamicLights").invoke(null);
 			return (boolean) test;
 		} catch(Exception e) {
-			e.printStackTrace();
+			DarknessLib.LOGGER.warn("Failed to access Optifine config, mod is likely absent. Ceasing future attempts.");
+			missingOF = true;
 		}
 		return false;
 	}
